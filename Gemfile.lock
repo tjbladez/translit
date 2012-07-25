@@ -1,0 +1,12 @@
+GEM
+  remote: http://rubygems.org/
+  specs:
+    riot (0.12.5)
+      rr
+    rr (1.0.4)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  riot
