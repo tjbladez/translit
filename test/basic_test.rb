@@ -17,4 +17,7 @@ end
 context "Translit#convert with enforced language" do
   should("transliterate to that language") { Translit.convert("test", :english)}.equals("test")
   should("keep it the same if language matched the text") {Translit.convert("test", :russian)}.equals("тест")
+
+  should("transliterate to english language if input language is mixed") { Translit.convert("test тест", :english)}.equals("test test")
+  should("transliterate to russian language if input language is mixed") { Translit.convert("test тест", :russian)}.equals("тест тест")
 end

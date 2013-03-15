@@ -2,9 +2,11 @@
 
 module Translit
   def self.convert(text, enforce_language = nil)
-    language = detect_input_language(text.split(/\s+/).first)
-
-    return text if language == enforce_language
+    language = if enforce_language
+      enforce_input_language(enforce_language)
+    else
+      detect_input_language(text.split(/\s+/).first)
+    end
 
     map = self.send(language.to_s).sort_by {|k,v| v.length <=>  k.length}
     map.each do |translit_key, translit_value|
@@ -27,6 +29,14 @@ private
 
   def self.detect_input_language(text)
     text.scan(/\w+/).empty? ? :russian : :english
+  end
+
+  def self.enforce_input_language(language)
+    if language == :english
+      :russian
+    else
+      :english
+    end
   end
 
   def self.english
