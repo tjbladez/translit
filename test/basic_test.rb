@@ -13,7 +13,22 @@ context "Translit#convert" do
   should("transliterate Cyrillic to English") do
     Translit.convert("Это простой тест")
   end.equals("Jeto prostoj test")
+
+  should("leave input unmodified by default") do
+    str = "Это простой тест"
+    Translit.convert(str)
+    str
+  end.equals("Это простой тест")
 end
+
+context "Translit#convert!" do
+  should("transliterate input in place") do
+    str = "Это простой тест"
+    Translit.convert!(str)
+    str
+  end.equals("Jeto prostoj test")
+end
+
 context "Translit#convert with enforced language" do
   should("transliterate to that language") { Translit.convert("test", :english)}.equals("test")
   should("keep it the same if language matched the text") {Translit.convert("test", :russian)}.equals("тест")

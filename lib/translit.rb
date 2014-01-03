@@ -1,7 +1,7 @@
 # coding: utf-8
 
 module Translit
-  def self.convert(text, enforce_language = nil)
+  def self.convert!(text, enforce_language = nil)
     language = if enforce_language
       enforce_input_language(enforce_language)
     else
@@ -14,6 +14,10 @@ module Translit
       text.gsub!(translit_key, translit_value.last)
     end
     text
+  end
+
+  def self.convert(text, enforce_language = nil)
+    convert!(text.dup, enforce_language)
   end
 
 private
