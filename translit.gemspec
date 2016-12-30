@@ -1,3 +1,5 @@
+# coding: utf-8
+
 require 'rake'
 
 Gem::Specification.new do |s|
