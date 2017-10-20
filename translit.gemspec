@@ -19,4 +19,5 @@ Gem::Specification.new do |s|
   s.homepage = %q{http://github.com/tjbladez/translit}
   s.summary = %q{Transliteration between cyrillic <-> latin from command-line or your program | Транслитерация между кириллицей и латиницей с коммандной строки или в твоей программе}
   s.post_install_message = %q{You are ready to transliterate | Вы готовы к транслитерации}
+  s.add_development_dependency "rspec"
 end
