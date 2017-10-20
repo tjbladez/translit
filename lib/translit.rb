@@ -16,7 +16,7 @@ module Translit
       detect_input_language(text.split(/\s+/).first)
     end
 
-    map = self.send(language.to_s + "_to_" + enforce_language.to_s).sort_by {|k,v| v.length <=>  k.length}
+    map = self.send(language.to_s + "_to_" + enforce_language.to_s).sort_by {|k,v| k.length}
     map.each do |translit_key, translit_value|
       text.gsub!(translit_key.capitalize, translit_value.first)
       text.gsub!(translit_key, translit_value.last)
