@@ -7,7 +7,7 @@ describe "translit" do
   let(:ukrainian) { "Транслітерація між кирилицею <-> Латинська з командного рядка або вашої програми" }
   let(:ukrainian_transliteration) { "Transliteratsiya mizh kyrylytseyu <-> Latyns'ka z komandnoho ryadka abo vashoyi prohramy" }
   # This is broken
-  let(:english_transliteration) { "" }
+  let(:english_transliteration) { "Транслитератион бетвеен cыриллиc <-> латин фром cомманд-лине ор ёур програм" }
   let(:ukrainian_english_transliteration) { "Транслітератіон бетвеен cирілліc <-> латін фром cомманд-ліне ор иоур проґрам" }
 
   it "transliterates from russian to english" do
@@ -19,7 +19,6 @@ describe "translit" do
   end
 
   it "transliterates from english to russian" do
-    # FIXME: This is broken, not sure why
     expect(Translit.convert(english, :russian)).to eq(english_transliteration)
   end
 
