@@ -1,6 +1,11 @@
+require 'translit'
+
 describe "translit" do
+  let(:russian) { "Транслитерация между кириллицей и латиницей с коммандной строки или в твоей программе" }
+  let(:english) { "Transliteration between cyrillic <-> latin from command-line or your program" }
+
   it "transliterates from english to russian" do
-    pending
+    expect(Translit.convert(russian, :english)).to eq(english)
   end
 
   it "transliterates from english to ukrainian" do
