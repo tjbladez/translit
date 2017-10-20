@@ -20,7 +20,7 @@ describe "translit" do
 
   it "transliterates from english to russian" do
     # FIXME: This is broken, not sure why
-    #expect(Translit.convert(english, :russian)).to eq(english_transliteration)
+    expect(Translit.convert(english, :russian)).to eq(english_transliteration)
   end
 
   it "transliterates from english to ukrainian" do
