@@ -25,4 +25,20 @@ describe "translit" do
   it "transliterates from english to ukrainian" do
     expect(Translit.convert(english, :ukrainian)).to eq(ukrainian_english_transliteration)
   end
+
+  describe "ukrainian to english transliteration" do
+    it "should put yu ahead of ü" do
+      #"yu"=>["Ю","ю"], "ju"=>["Ю","ю"], "ü"=>["Ю","ю"]
+      expect(Translit.convert("Ю", :english)).to eq("Yu")
+    end
+
+    it "should put yu ahead of ü even at the end of a word" do
+      expect(Translit.convert("Біблію", :english)).to eq("Bibliyu")
+    end
+
+    it "should put ye ahead of je" do
+      #"ye"=>["Є","є"], "je"=>["Є","є"]
+      expect(Translit.convert("Є", :english)).to eq("Ye")
+    end
+  end
 end
