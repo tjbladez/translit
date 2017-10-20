@@ -1,4 +1,6 @@
-# coding: utf-8
+# Resources for Ukrainian transliteration
+# * http://en.ukrlandia.com.ua/cyrillic-alphabets/
+# * http://www.ukrainiansintheuk.info/eng/00/translit-e.htm
 
 module Translit
   def self.convert!(text, enforce_language = nil)
