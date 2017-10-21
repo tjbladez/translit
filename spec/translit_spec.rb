@@ -47,4 +47,14 @@ describe "translit" do
       expect(Translit.convert("Bible", :ukrainian)).to eq("Бібле")
     end
   end
+
+  describe "edge cases" do
+    it "should handle empty strings" do
+      expect(Translit.convert("", :english)).to eq("")
+    end
+
+    it "should handle strings with empty lines" do
+      expect(Translit.convert("\n\n", :english)).to eq("\n\n")
+    end
+  end
 end
