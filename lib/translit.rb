@@ -11,9 +11,9 @@ module Translit
 
   def self.convert!(text, enforce_language = nil)
     language = if enforce_language
-      enforce_input_language(text.split(/\s+/).first, enforce_language)
+      enforce_input_language(non_empty_line(text), enforce_language)
     else
-      detect_input_language(text.split(/\s+/).first)
+      detect_input_language(non_empty_line(text))
     end
 
     map = self.send(language.to_s + "_to_" + enforce_language.to_s).sort_by {|k,v| k.length}.reverse
@@ -28,6 +28,10 @@ module Translit
   end
 
 private
+
+  def self.non_empty_line(text)
+    text.split(/\s+/).select { |line| !line.empty? }.first
+  end
 
   def self.invert_character_map(map)
     map.dup.inject({}) do |acc, tuple|
@@ -51,7 +55,7 @@ private
   end
 
   def self.detect_input_language(text)
-    if text.scan(/\w+/).empty?
+    if text && text.scan(/\w+/).empty?
       slavic_language(text)
     else
       :english
@@ -68,7 +72,7 @@ private
 
   def self.slavic_language(text)
     # If text contains Ukrainian chars we know it is Ukrainian
-    if UKRAINIAN_ONLY_CHARS.any? { |uk_char| text.include? uk_char }
+    if UKRAINIAN_ONLY_CHARS.any? { |uk_char| text && text.include?(uk_char) }
       :ukrainian
     else
       :russian
