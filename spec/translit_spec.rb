@@ -41,4 +41,10 @@ describe "translit" do
       expect(Translit.convert("Є", :english)).to eq("Ye")
     end
   end
+
+  describe "english to ukrainian transliteration" do
+    it "should put yu ahead of ü even at the end of a word" do
+      expect(Translit.convert("Bible", :ukrainian)).to eq("Бібле")
+    end
+  end
 end
