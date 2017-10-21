@@ -18,8 +18,7 @@ module Translit
 
     map = self.send(language.to_s + "_to_" + enforce_language.to_s).sort_by {|k,v| k.length}.reverse
     map.each do |translit_key, translit_value|
-      text.gsub!(translit_key.capitalize, translit_value.first)
-      text.gsub!(translit_key, translit_value.last)
+      text.gsub!(translit_key, translit_value.first)
     end
     text
   end
@@ -32,10 +31,21 @@ private
 
   def self.invert_character_map(map)
     map.dup.inject({}) do |acc, tuple|
+      rus = tuple.last.first
+      eng_value       = tuple.first
+      acc[rus] ? acc[rus] << eng_value            : acc[rus] = [eng_value]
+      acc
+    end
+  end
+
+  def self.latin_cases(map)
+    map.dup.inject({}) do |acc, tuple|
       rus_up, rus_low = tuple.last
       eng_value       = tuple.first
-      acc[rus_up]  ? acc[rus_up]  << eng_value.capitalize : acc[rus_up]  = [eng_value.capitalize]
-      acc[rus_low] ? acc[rus_low] << eng_value            : acc[rus_low] = [eng_value]
+      acc[eng_value] = [rus_low]
+      unless eng_value == eng_value.capitalize
+        acc[eng_value.capitalize] = [rus_up]
+      end
       acc
     end
   end
@@ -67,19 +77,19 @@ private
 
   # Unsupported latin: "ä"=>["Э","э"], "ü"=>["Ю","ю"],
   def self.english_to_ukrainian
-    { "a"=>["А","а"], "b"=>["Б","б"], "v"=>["В","в"], "h"=>["Г","г"], "g"=>["Ґ","ґ"], "d"=>["Д","д"], "e"=>["Е","е"], "ye"=>["Є","є"], "je"=>["Є","є"], "zh"=>["Ж","ж"],
+    @english_to_ukrainian ||= latin_cases({ "a"=>["А","а"], "b"=>["Б","б"], "v"=>["В","в"], "h"=>["Г","г"], "g"=>["Ґ","ґ"], "d"=>["Д","д"], "e"=>["Е","е"], "ye"=>["Є","є"], "je"=>["Є","є"], "zh"=>["Ж","ж"],
       "z"=>["З","з"], "i"=>["І","і"], "yi"=>["Ї","ї"], "j"=>["Й","й"], "k"=>["К","к"], "l"=>["Л","л"], "m"=>["М","м"], "n"=>["Н","н"], "o"=>["О","о"], "p"=>["П","п"], "r"=>["Р","р"],
       "s"=>["С","с"], "t"=>["Т","т"], "u"=>["У","у"], "f"=>["Ф","ф"], "kh"=>["Х","х"], "x"=>["Кс","кс"], "ts"=>["Ц","ц"], "ch"=>["Ч","ч"], "sh"=>["Ш","ш"], "w"=>["В","в"],
       "shch"=>["Щ","щ"], "sch"=>["Щ","щ"], "y"=>["И","и"], "'"=>["Ь","ь"], "yu"=>["Ю","ю"], "ju"=>["Ю","ю"],
-      "ya"=>["Я","я"], "ja"=>["Я","я"], "q"=>["К","к"]}
+      "ü"=>["Ю","ю"], "ya"=>["Я","я"], "ja"=>["Я","я"], "q"=>["К","к"]})
   end
 
   def self.english_to_russian
-    { "a"=>["А","а"], "b"=>["Б","б"], "v"=>["В","в"], "g"=>["Г","г"], "d"=>["Д","д"], "e"=>["Е","е"], "yo"=>["Ё","ё"], "jo"=>["Ё","ё"], "ö"=>["Ё","ё"], "zh"=>["Ж","ж"],
+    @english_to_russian ||= latin_cases({ "a"=>["А","а"], "b"=>["Б","б"], "v"=>["В","в"], "g"=>["Г","г"], "d"=>["Д","д"], "e"=>["Е","е"], "yo"=>["Ё","ё"], "jo"=>["Ё","ё"], "ö"=>["Ё","ё"], "zh"=>["Ж","ж"],
       "z"=>["З","з"], "i"=>["И","и"], "j"=>["Й","й"], "k"=>["К","к"], "l"=>["Л","л"], "m"=>["М","м"], "n"=>["Н","н"], "o"=>["О","о"], "p"=>["П","п"], "r"=>["Р","р"],
       "s"=>["С","с"], "t"=>["Т","т"], "u"=>["У","у"], "f"=>["Ф","ф"], "h"=>["Х","х"], "x"=>["Кс","кс"], "ts"=>["Ц","ц"], "ch"=>["Ч","ч"], "sh"=>["Ш","ш"], "w"=>["В","в"],
       "shch"=>["Щ","щ"], "sch"=>["Щ","щ"], "#"=>["Ъ","ъ"], "y"=>["Ы","ы"], "'"=>["Ь","ь"], "je"=>["Э","э"], "ä"=>["Э","э"], "yu"=>["Ю","ю"], "ju"=>["Ю","ю"],
-      "ü"=>["Ю","ю"], "ya"=>["Я","я"], "ja"=>["Я","я"], "q"=>["Я","я"]}
+      "ü"=>["Ю","ю"], "ya"=>["Я","я"], "ja"=>["Я","я"], "q"=>["Я","я"]})
   end
 
   def self.russian_to_english
