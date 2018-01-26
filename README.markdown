@@ -14,14 +14,14 @@ Or you can translit stdin now via just: <code>translit</code>. To stop stdin inp
 Translit using autodetection:
 
 ```
-Translit.convert("Отличный день") #=> Otlichnyj den'
-Translit.convert("Otlichnyj den'") #=> Отличный день
+Translit.convert("Отличный день") #=> "Otlichnyj den'"
+Translit.convert("Otlichnyj den'") #=> "Отличный день"
 ```
 Translit forcing target language:
 
 ```
-Translit.convert("Отличный den'", :russian) #=> Отличный деньOtlichnyj den'
-Translit.convert("Otlichnyj день", :english) #=> Otlichnyj den'
+Translit.convert("Отличный den'", :russian) #=> "Отличный день"
+Translit.convert("Otlichnyj день", :english) #=> "Otlichnyj den'"
 ```
 
 ## Русский ##
@@ -40,11 +40,11 @@ Translit.convert("Otlichnyj день", :english) #=> Otlichnyj den'
 Транслитирование с автоопределнием языка:
 
 ```
-Translit.convert("Отличный день") #=> Otlichnyj den'
-Translit.convert("Otlichnyj den'") #=> Отличный день
+Translit.convert("Отличный день") #=> "Otlichnyj den'"
+Translit.convert("Otlichnyj den'") #=> "Отличный день"
 ```
 Транслитирование на определенный язык:
 
 ```
-Translit.convert("Отличный den'", :russian) #=> Отличный деньOtlichnyj den'
-Translit.convert("Otlichnyj день", :english) #=> Otlichnyj den'
+Translit.convert("Отличный den'", :russian) #=> "Отличный день"
+Translit.convert("Otlichnyj день", :english) #=> "Otlichnyj den'"
